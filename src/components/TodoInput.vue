@@ -1,36 +1,51 @@
 <template>
-<div class="inputBox shadow">
-    <input type="text" v-model="newTodoItem" @keydown.enter="addTodo">
+  <div class="inputBox shadow">
+    <input type="text" v-model="newTodoItem" @keydown.enter="addTodo" />
     <span class="addContainer">
-        <i class="fas fa-plus addBtn" @click="addTodo"></i>
+      <i class="fas fa-plus addBtn" @click="addTodo"></i>
     </span>
-</div>
-  
+
+    <Modal v-if="showModal" @close="showModal = false" >
+      <!--
+      you can use custom content here to overwrite
+      default content
+      -->
+      <h3 slot="header">Hey,</h3>
+      <h4 slot="body">Pleaes type and hit enter</h4>
+      <h1 slot="footer">
+        <i class="closeModalBtn far fa-check-square" @click="showModal = false"
+        ></i>
+      </h1>
+    </Modal>
+  </div>
 </template>
 
 <script>
+import Modal from "./common/Modal";
 export default {
-    data(){
-        return {
-            newTodoItem: '',
-        }
+  data() {
+    return {
+      newTodoItem: "",
+      showModal: false
+    };
+  },
+  methods: {
+    addTodo() {
+      if (this.newTodoItem !== "") {
+        this.$emit("addTodoItem", this.newTodoItem);
+        this.clearInput();
+      } else {
+        this.showModal = true;
+      }
     },
-    methods: {
-        addTodo(){
-            if(this.newTodoItem !==''){
-            const obj = {completed: false, item: this.newTodoItem};
-            console.log(this.newTodoItem);
-            localStorage.setItem(this.newTodoItem, JSON.stringify(obj));
-            this.clearInput();
-            }
-        },
-        clearInput(){
-            this.newTodoItem= '';
-
-        }
+    clearInput() {
+      this.newTodoItem = "";
     }
-
-}
+  },
+  components: {
+    Modal
+  }
+};
 </script>
 
 <style scoped>
