@@ -1,11 +1,9 @@
 <template>
   <div id="app">
     <TodoHeader></TodoHeader>
-    <TodoInput @addTodoItem="addOneItem"></TodoInput>
-    <TodoList :propsdata="todoItems" 
-              @removeItem="removeOneItem" 
-              @toggleItem="toggleOneItem"></TodoList>
-    <TodoFooter @clearAll="clearAllItems"></TodoFooter>
+    <TodoInput></TodoInput>
+    <TodoList></TodoList>
+    <TodoFooter></TodoFooter>
   </div>
 </template>
 
@@ -16,44 +14,31 @@ import TodoInput from "./components/TodoInput";
 import TodoList from "./components/TodoList";
 
 export default {
-  data() {
-    return {
-      todoItems: []
-    };
-  },
-  methods: {
-    addOneItem(todoItem) {
-      const obj = { completed: false, item: todoItem };
-      localStorage.setItem(todoItem, JSON.stringify(obj));
-      this.todoItems.push(obj);
-    },
-    removeOneItem(todoItem, index){
-      localStorage.removeItem(todoItem.item); 
-      this.todoItems.splice(index, 1);
-    },
-    toggleOneItem(todoItem){
-      this.todoItemsp[index].competed = !this.todoItemsp[index].competed;
-      localStorage.removeItem(todoItem.item);
-      localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
-    },
-    clearAllItems(){
-      this.todoItems = [];
-      localStorage.clear();
-    }
-  },
 
-  created: function() {
-    if (localStorage.length > 0) {
-      for (var i = 0; i < localStorage.length; i++) {
-        if (localStorage.key(i) !== "loglevel:webpack-dev-server") {
-          this.todoItems.push(
-            JSON.parse(localStorage.getItem(localStorage.key(i)))
-          );
-          //this.todoItems.push(localStorage.key(i));
-        }
-      }
-    }
-  },
+  /* Move to Vuex Store Mutations */
+
+  // methods: {
+  //   addOneItem(todoItem) {
+  //     const obj = { completed: false, item: todoItem };
+  //     localStorage.setItem(todoItem, JSON.stringify(obj));
+  //     this.todoItems.push(obj);
+  //   },
+  //   removeOneItem(todoItem, index){
+  //     localStorage.removeItem(todoItem.item); 
+  //     this.todoItems.splice(index, 1);
+  //   },
+  //   toggleOneItem(todoItem){
+  //     this.todoItemsp[index].competed = !this.todoItemsp[index].competed;
+  //     localStorage.removeItem(todoItem.item);
+  //     localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
+  //   },
+  //   clearAllItems(){
+  //     this.todoItems = [];
+  //     localStorage.clear();
+  //   }
+  // },
+
+  
   components: {
     TodoFooter,
     TodoHeader,
